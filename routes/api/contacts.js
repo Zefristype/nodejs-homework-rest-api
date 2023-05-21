@@ -1,15 +1,18 @@
 const express = require("express");
 const contacts = require("../../controllers/contacts");
+const { isValidId } = require("../../helpers");
 const router = express.Router();
 
-router.get("/", contacts.getAll);
+router.get("/", contacts.getContacts);
 
-router.get("/:contactId", contacts.getById);
+router.get("/:contactId", isValidId, contacts.getContactById);
 
-router.post("/", contacts.add);
+router.post("/", contacts.addContact);
 
-router.delete("/:contactId", contacts.deleteById);
+router.delete("/:contactId", isValidId, contacts.deleteContactById);
 
-router.put("/:contactId", contacts.updateById);
+router.put("/:contactId", isValidId, contacts.updateContactById);
+
+router.patch("/:contactId/favorite", isValidId, contacts.updateStatusContact);
 
 module.exports = router;
